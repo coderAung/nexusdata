@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexusdata"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Ye Wont Aung", email = "yewontaung798@gmail.com"}
+]
+
+dependencies = [
+    "SQLAlchemy>=2.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
