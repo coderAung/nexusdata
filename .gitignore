@@ -1,0 +1,79 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# FastAPI / ASGI
+# =========================
+*.log
+uvicorn.log
+
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# =========================
+# Mypy / Type Checking
+# =========================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# =========================
+# Ruff / Linting
+# =========================
+.ruff_cache/
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Database / Local State
+# =========================
+*.sqlite
+*.sqlite3
+*.db
+
+# =========================
+# Cache / Runtime
+# =========================
+.cache/
