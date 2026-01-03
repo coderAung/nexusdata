@@ -1,0 +1,4 @@
+from nexusdata.core.queries.generators import NexusQueryGenerator
+from nexusdata.utils.queries.generator_impls import NexusQueryGeneratorImpl
+
+nexus_query_generator:NexusQueryGenerator = NexusQueryGeneratorImpl()
