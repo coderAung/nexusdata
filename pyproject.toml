@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "nexusdata"
 version = "0.1.0"
+description = "NexusData - data access, services and DTO abstractions."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -19,3 +20,7 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["src"]
 exclude = ["tests*"]
+
+[project.urls]
+Homepage = "https://github.com/coderAung/nexusdata"
+Repository = "https://github.com/coderAung/nexusdata"
