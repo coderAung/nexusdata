@@ -1,0 +1,1 @@
+from test_project.models import role, account, post, comment
