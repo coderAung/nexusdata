@@ -1,17 +1,18 @@
 import warnings
 from typing import Any, Callable, Type
 
+from nexusdata.core.metadata.typings import MODEL
 from nexusdata.core.queries.generators import NexusQueryGenerator
 from nexusdata.core.queries.specials import NexusQuery
 from nexusdata.utils.exceptions import NexusQueryException
 from nexusdata.utils.queries.resolvers import resolve_chain, resolve_placeholders
-from nexusdata.utils.queries.sqls import sql_queries, sql_logics
+from nexusdata.utils.queries.sqls import sql_queries, sql_logics, sql_model_queries
 from nexusdata.utils.queries.utilities import is_logics, is_keyword
 
 
 class NexusQueryGeneratorImpl(NexusQueryGenerator):
 
-    def generate_query(self, fn: Callable[..., Any] | Any, model: Type, *args, **kwargs) -> NexusQuery:
+    def generate_query(self, fn: Callable[..., Any] | Any, model: Type[MODEL], *args, **kwargs) -> NexusQuery:
         fn_name:str = fn.__name__
         [sql_key, criteria] = fn_name.split("_by_")
 
@@ -23,14 +24,14 @@ class NexusQueryGeneratorImpl(NexusQueryGenerator):
 
         where = self.generate_where(chain, placeholders)
 
-        query = f"{sql_queries.get(sql_key)(model)} {where}"
+        query = sql_model_queries.get(sql_key)(model)
         params = self.generate_params(placeholders, *args, **kwargs)
 
-        return NexusQuery(key=sql_key, query=query, params=params)
+        return NexusQuery(key=sql_key, query=query, where=where, params=params)
 
     def generate_where(self, chain: list[str], placeholders: list[str]) -> str:
 
-        where = "where"
+        where = ""
         is_next = False
 
         for i in range(len(chain)):

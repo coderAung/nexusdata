@@ -1,11 +1,14 @@
 from typing import Any
 
+from sqlalchemy import Delete, Select
+
 
 class NexusQuery:
 
-    def __init__(self, key:str, query:str, params:dict[str, Any]):
+    def __init__(self, key:str, query:Select | Delete, where:str, params:dict[str, Any]):
         self.key = key
         self.query = query
+        self.where = where
         self.params = params
 
     @property

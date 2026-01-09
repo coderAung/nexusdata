@@ -18,11 +18,11 @@ def transactional(func:Callable[..., Any] | None = None, *, read_only:bool = Fal
 
             depth = getattr(self, "__trx_depth__", 0)
             self.__trx_depth__ = depth + 1
-
-            result = do_trx(lambda : fn(self, *args, **kwargs), session, depth, read_only)
-
-            self.__trx_depth__ -= 1
-            return result
+            try:
+                result = do_trx(lambda : fn(self, *args, **kwargs), session, depth, read_only)
+                return result
+            finally:
+                self.__trx_depth__ -= 1
         return wrapper
 
     if func is None:
@@ -41,15 +41,16 @@ def query(
     def query_func(self, *args, **kwargs):
         nq = nexus_query_generator.generate_query(func, self._model, *args, **kwargs)
         session:Session = getattr(self, "_session")
-        result = session.execute(statement=text(nq.query), params=nq.params).mappings()
-        if nq.is_count: return result.first().get("c")
+        stmt = nq.query.where(text(nq.where))
+        result = session.execute(statement=stmt, params=nq.params)
+        if nq.is_count: return result.scalar()
         if nq.is_delete: return None
 
         rt = func.__annotations__.get("return", None)
         if is_collection(rt):
             return result.all()
 
-        return result.first()
+        return result.scalar_one_or_none()
 
     def decorator(fn:Callable[..., Any]):
         # noinspection PyUnresolvedReferences
