@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nexusdata"
+name = "nexusrepo"
 version = "0.2.0"
 description = "NexusData - data access, services and DTO abstractions."
 readme = "README.md"
