@@ -33,5 +33,5 @@ class AsyncSessionRepository(AbstractRepository[MODEL, ID], ABC):
         await self._session.delete(entity)
 
     async def delete_by_id(self, _id:ID):
-        e = self.find_by_id(_id)
+        e = await self.find_by_id(_id)
         await self._session.delete(e)
