@@ -1,3 +1,4 @@
+from functools import wraps
 from typing import Callable, Any, Type
 
 from sqlalchemy import RowMapping, text
@@ -13,6 +14,7 @@ from nexusdata.utils.singletons import nexus_query_generator
 
 def transactional(func:Callable[..., Any] | None = None, *, read_only:bool = False):
     def decorator(fn:Callable[..., Any]):
+        @wraps(fn)
         def wrapper(self, *args, **kwargs):
             session:Session = getattr(self, "_session")
 
@@ -54,6 +56,7 @@ def query(
 
     def decorator(fn:Callable[..., Any]):
         # noinspection PyUnresolvedReferences
+        @wraps(fn)
         def wrapper(self, *args, **kwargs):
             session:Session = getattr(self, "_session")
 
