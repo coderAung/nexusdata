@@ -53,7 +53,7 @@ def query(
 
         rt = func.__annotations__.get("return", None)
         if is_collection(rt):
-            return result.all()
+            return result.scalars().all()
         return result.scalar_one_or_none()
 
     def decorator(fn:Callable[..., Any]):
