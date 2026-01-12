@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nexusrepo"
-version = "0.2.4"
+version = "0.2.5"
 description = "NexusData - data access, services and DTO abstractions."
 readme = "README.md"
 requires-python = ">=3.11"
