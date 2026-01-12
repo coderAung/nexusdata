@@ -1,2 +1,3 @@
-## [0.2.3] => [0.2.4] - 12.01.2026
- ### change the query_func's collection return value to result.scalars().all()
+## [0.2.4] => [0.2.5] - 12.01.2026
+ ### add generic type hint for transactional decorator
+ ### import NexusSecurity to main package

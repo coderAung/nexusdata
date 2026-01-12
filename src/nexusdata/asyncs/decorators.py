@@ -4,7 +4,7 @@ from typing import Callable, Any, Awaitable, Type
 from sqlalchemy import RowMapping, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from nexusdata.core.metadata.typings import DTO
+from nexusdata.core.metadata.typings import DTO, RT
 from nexusdata.asyncs.uow.transactions import do_trx
 from nexusdata.utils.exceptions import NexusQueryException
 from nexusdata.utils.queries.resolvers import resolve_result
@@ -12,7 +12,7 @@ from nexusdata.utils.queries.utilities import is_collection
 from nexusdata.utils.singletons import nexus_query_generator
 
 
-def transactional(func:Callable[..., Awaitable[Any]] | None = None, *, read_only:bool = False):
+def transactional(func:Callable[..., RT] | None = None, *, read_only:bool = False) -> Callable[..., RT]:
     def decorator(fn:Callable[..., Awaitable[Any]]):
         @wraps(fn)
         async def wrapper(self, *args, **kwargs):
@@ -35,10 +35,10 @@ def transactional(func:Callable[..., Awaitable[Any]] | None = None, *, read_only
     return decorator(fn=func)
 
 def query(
-        func:Callable[..., Awaitable[Any]] | None = None,
+        func:Callable[..., RT] | None = None,
         *, sql:str | None = None,
         dto:Type[DTO] | None = None,
-        map_func:Callable[[RowMapping], DTO] | None = None):
+        map_func:Callable[[RowMapping], DTO] | None = None) -> Callable[..., RT]:
 
     if func is None and sql is None:
         raise NexusQueryException("func or sql must be defined to use query.")
